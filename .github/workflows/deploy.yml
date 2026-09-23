@@ -6,12 +6,17 @@ on:
       - main
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
@@ -19,22 +24,26 @@ jobs:
       - name: Setup Emscripten
         uses: mymindstorm/setup-emsdk@v14
 
-      - name: Setup Raylib Web
+      - name: Build Raylib & Game
         run: |
           git clone --depth 1 --branch 5.0 https://github.com/raysan5/raylib.git
           cd raylib/src
           make PLATFORM=PLATFORM_WEB
-          mkdir -p /tmp/raylib
-          cp libraylib.a /tmp/raylib/ 2>/dev/null || cp libraylib.web.a /tmp/raylib/libraylib.a
-          cp raylib.h raymath.h rlgl.h /tmp/raylib/
+          cd ../..
+          em++ main.cpp -o index.html -Os -Wall -I./raylib/src -L./raylib/src -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB
 
-      - name: Compile C++ to WebAssembly
-        run: |
-          emcc main.cpp -o index.html -Os -Wall -I/tmp/raylib -L/tmp/raylib -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-          
+          path: '.'
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
