@@ -71,8 +71,8 @@ if (distance > 5.0f) {
 ```
 https://github.com/user-attachments/assets/3ca7cc38-3728-48b0-8346-eb846bdf1e35
 
-// Detección e impacto entre dos partículas circulares 
-```(Radio R1 + R2)
+### 4. Colisiones Multicuerpo e Impulso
+
 Vector2 delta = Vector2Subtract(p2.position, p1.position);
 float distance = Vector2Length(delta);
 
