@@ -16,24 +16,21 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Install System Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwayland-dev libxkbcommon-dev xorg-dev libglu1-mesa-dev
-
       - name: Setup Emscripten
         uses: mymindstorm/setup-emsdk@v12
 
       - name: Setup Raylib Web
         run: |
-          git clone --depth 1 https://github.com/raysan5/raylib.git
+          git clone --depth 1 --branch 5.0 https://github.com/raysan5/raylib.git
           cd raylib/src
           make PLATFORM=PLATFORM_WEB
-          sudo make install PLATFORM=PLATFORM_WEB
+          mkdir -p /tmp/raylib
+          cp libraylib.web.a /tmp/raylib/libraylib.a
+          cp raylib.h raymath.h rlgl.h /tmp/raylib/
 
       - name: Compile C++ to WebAssembly
         run: |
-          emcc main.cpp -o index.html -Os -Wall -I/usr/local/include -L/usr/local/lib -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB
+          emcc main.cpp -o index.html -Os -Wall -I/tmp/raylib -L/tmp/raylib -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
