@@ -86,6 +86,7 @@ if (distance < (p1.radius + p2.radius)) {
     p1.velocity = Vector2Subtract(p1.velocity, Vector2Scale(normal, impulse));
     p2.velocity = Vector2Add(p2.velocity, Vector2Scale(normal, impulse));
 
+```
 https://github.com/user-attachments/assets/1a152a09-73da-4cbf-84f0-56d9f5fc0e6d
 
 ---
