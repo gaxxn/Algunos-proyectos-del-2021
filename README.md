@@ -71,5 +71,22 @@ if (distance > 5.0f) {
 ```
 https://github.com/user-attachments/assets/3ca7cc38-3728-48b0-8346-eb846bdf1e35
 
+// Detección e impacto entre dos partículas circulares (Radio R1 + R2)
+Vector2 delta = Vector2Subtract(p2.position, p1.position);
+float distance = Vector2Length(delta);
 
+if (distance < (p1.radius + p2.radius)) {
+    // Intercambio de momentos e inversión de velocidad en eje normal
+    Vector2 normal = Vector2Scale(delta, 1.0f / distance);
+    Vector2 relativeVelocity = Vector2Subtract(p1.velocity, p2.velocity);
+    float impulse = Vector2DotProduct(relativeVelocity, normal);
+    
+    p1.velocity = Vector2Subtract(p1.velocity, Vector2Scale(normal, impulse));
+    p2.velocity = Vector2Add(p2.velocity, Vector2Scale(normal, impulse));
 
+https://github.com/user-attachments/assets/1a152a09-73da-4cbf-84f0-56d9f5fc0e6d
+
+---
+
+> *"Estaré subiendo diariamente diferentes proyectos antiguos que he desarrollado a lo largo del tiempo, hasta enseñar mi progreso actual."*
+> 
