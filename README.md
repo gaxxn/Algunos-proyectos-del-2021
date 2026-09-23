@@ -24,8 +24,6 @@ velocity.y += gravity * dt;
 ```
 https://github.com/user-attachments/assets/c955fb47-6549-4b4a-a26c-095de7695ba1
 
-<video src="https://github.com/user-attachments/assets/c955fb47-6549-4b4a-a26c-095de7695ba1" controls autoplay loop muted width="100%"></video>
-
 ---
 
 ### 2. Ley de Hooke (Sistemas Elásticos)
