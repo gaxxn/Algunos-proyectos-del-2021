@@ -24,13 +24,22 @@ velocity.y += gravity * dt;
 ```
 https://github.com/user-attachments/assets/c955fb47-6549-4b4a-a26c-095de7695ba1
 
+<video src="https://github.com/user-attachments/assets/c955fb47-6549-4b4a-a26c-095de7695ba1" controls autoplay loop muted width="100%"></video>
+
+---
+
+### 2. Ley de Hooke (Sistemas Elásticos)
+Simulación de la fuerza de restitución proporcional a la deformación del resorte con amortiguamiento (*damping*):
+
+```cpp
 // Fuerza elástica de restitución: F = -k * x - c * v
 Vector2 displacement = Vector2Subtract(ballPosition, anchorPoint);
 Vector2 springForce = Vector2Scale(displacement, -k);
 Vector2 dampingForce = Vector2Scale(velocity, -c);
+
 acceleration = Vector2Scale(Vector2Add(springForce, dampingForce), 1.0f / mass);
 
-
+```
 https://github.com/user-attachments/assets/0ccb60e1-73ec-4d6a-9848-bf90b6e29600
 
 
