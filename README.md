@@ -1,29 +1,27 @@
-# Algunos-proyectos-del-2021
-Algunos proyectos viejos del 2021 que hice en la escuela
+# ◈ Motor de Física 2D en C++
 
-# ◈ MOTOR DE FÍSICA 2D EN C++ (2021)
+![C++](https://img.shields.io/badge/C%2B%2B-17-00599C?style=flat-square&logo=cplusplus)
+![Raylib](https://img.shields.io/badge/Raylib-5.0-555555?style=flat-square)
+![WebAssembly](https://img.shields.io/badge/WebAssembly-Emscripten-654FF0?style=flat-square&logo=webassembly)
+![GitHub Pages](https://img.shields.io/badge/Deploy-GitHub%20Pages-222222?style=flat-square&logo=github)
 
-Proyecto escolar desarrollado originalmente en **2021** a petición de mi profesora para programar simulaciones físicas desde cero utilizando **C++** y **Visual Studio Code**. 
-
-Recientemente el código fue portado a **Raylib 5.0** y compilado a **WebAssembly (WASM)** con **Emscripten** para ejecutarse de forma interactiva en la web.
+Simulador de físicas interactivo en dos dimensiones desarrollado originalmente en **2021** como proyecto escolar. El motor fue programado modularmente en **C++** sobre **Visual Studio Code**, y posteriormente portado a **Raylib 5.0** con compilación a **WebAssembly (WASM)** mediante **Emscripten** para ejecución nativa en navegadores web y móviles.
 
 ---
 
-## ✦ PROCEDIMIENTO Y MÓDULOS
+## ✦ MÓDULOS DE SIMULACIÓN Y CÓDIGO
 
-La simulación calcula cuadro a cuadro (*step-based physics*) el movimiento dinámico mediante integración de vectores en 2D:
+La simulación calcula cuadro a cuadro (*step-based physics*) la integración vectorial del movimiento dinámico en espacio 2D.
 
-### 1. Kinematics (Cinemática)
-* **Objetivo:** Simular el movimiento parabólico y la trayectoria de un proyectil.
-* **Cálculo:** Aplicación de velocidad constante en el eje X y aceleración por gravedad en el eje Y.
+### 1. Cinemática (Kinematics)
+Cálculo de movimiento parabólico y actualización de vectores de velocidad y posición en tiempo real:
+
 ```cpp
 // Actualización de posición mediante vectores de velocidad y aceleración
 position.x += velocity.x * dt;
 position.y += velocity.y * dt;
 velocity.y += gravity * dt;
-```cpp
-position.x += velocity.x * dt;
 ```
-https://github.com/user-attachments/assets/f3c45201-231d-4ce0-aea4-6dbd375ed430
+https://github.com/user-attachments/assets/c955fb47-6549-4b4a-a26c-095de7695ba1
 
 
