@@ -21,6 +21,9 @@ La simulaci√≥n calcula cuadro a cuadro (*step-based physics*) el movimiento din√
 position.x += velocity.x * dt;
 position.y += velocity.y * dt;
 velocity.y += gravity * dt;
+```cpp
+position.x += velocity.x * dt;
+```
+https://github.com/user-attachments/assets/f3c45201-231d-4ce0-aea4-6dbd375ed430
 
-https://github.com/user-attachments/assets/ba165b42-934f-4a23-83d2-d5e89126ea05
 
