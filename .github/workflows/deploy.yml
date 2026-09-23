@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Emscripten
-        uses: mymindstorm/setup-emsdk@v12
+        uses: mymindstorm/setup-emsdk@v14
 
       - name: Setup Raylib Web
         run: |
@@ -25,7 +25,7 @@ jobs:
           cd raylib/src
           make PLATFORM=PLATFORM_WEB
           mkdir -p /tmp/raylib
-          cp libraylib.web.a /tmp/raylib/libraylib.a
+          cp libraylib.a /tmp/raylib/ 2>/dev/null || cp libraylib.web.a /tmp/raylib/libraylib.a
           cp raylib.h raymath.h rlgl.h /tmp/raylib/
 
       - name: Compile C++ to WebAssembly
@@ -33,7 +33,8 @@ jobs:
           emcc main.cpp -o index.html -Os -Wall -I/tmp/raylib -L/tmp/raylib -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
+          
