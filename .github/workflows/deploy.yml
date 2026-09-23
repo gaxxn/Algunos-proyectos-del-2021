@@ -30,7 +30,7 @@ jobs:
           cd raylib/src
           make PLATFORM=PLATFORM_WEB
           cd ../..
-          em++ main.cpp -o index.html -Os -Wall -I./raylib/src -L./raylib/src -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB
+          em++ main.cpp -o index.html -Os -Wall -I./raylib/src -L./raylib/src -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB --shell-file ./raylib/src/minshell.html
 
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
@@ -47,3 +47,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+        
