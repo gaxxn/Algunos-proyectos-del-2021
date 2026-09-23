@@ -1,0 +1,34 @@
+name: Build and Deploy Raylib Web
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Emscripten
+        uses: mymindstorm/setup-emsdk@v12
+
+      - name: Setup Raylib Web
+        run: |
+          git clone --depth 1 https://github.com/raysan5/raylib.git
+          cd raylib/src
+          make PLATFORM=PLATFORM_WEB
+          sudo make install PLATFORM=PLATFORM_WEB
+
+      - name: Compile C++ to WebAssembly
+        run: |
+          emcc main.cpp -o index.html -Os -Wall -I/usr/local/include -L/usr/local/lib -lraylib -s USE_GLFW=3 -s ASYNCIFY -DPLATFORM_WEB
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
