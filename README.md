@@ -28,7 +28,6 @@ https://github.com/user-attachments/assets/c955fb47-6549-4b4a-a26c-095de7695ba1
 Vector2 displacement = Vector2Subtract(ballPosition, anchorPoint);
 Vector2 springForce = Vector2Scale(displacement, -k);
 Vector2 dampingForce = Vector2Scale(velocity, -c);
-
 acceleration = Vector2Scale(Vector2Add(springForce, dampingForce), 1.0f / mass);
 
 
