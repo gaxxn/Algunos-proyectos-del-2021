@@ -21,6 +21,17 @@ Cálculo de movimiento parabólico y actualización de vectores de velocidad y p
 position.x += velocity.x * dt;
 position.y += velocity.y * dt;
 velocity.y += gravity * dt;
+// 1. Aceleración por gravedad y actualización de posición
+velocity.y += gravity * dt;
+position.x += velocity.x * dt;
+position.y += velocity.y * dt;
+
+// 2. Colisión con el suelo e inversión de velocidad (Rebote)
+if (position.y + radius >= screenHeight) {
+    position.y = screenHeight - radius;
+    velocity.y *= -restitution; // P. ej. -0.8f para perder energía
+}
+
 ```
 https://github.com/user-attachments/assets/c955fb47-6549-4b4a-a26c-095de7695ba1
 
@@ -39,5 +50,26 @@ acceleration = Vector2Scale(Vector2Add(springForce, dampingForce), 1.0f / mass);
 
 ```
 https://github.com/user-attachments/assets/0ccb60e1-73ec-4d6a-9848-bf90b6e29600
+
+---
+
+### 3. Atracción Gravitacional (Gravitational Attraction)
+Simulación de fuerza central tipo imán o punto masivo que atrae partículas dinámicas en el espacio 2D mediante aceleración dirigida:
+
+
+```cpp
+// Cálculo del vector de atracción hacia el punto central
+Vector2 direction = Vector2Subtract(attractorPos, particlePos);
+float distance = Vector2Length(direction);
+
+if (distance > 5.0f) {
+    Vector2 normalizeDir = Vector2Scale(direction, 1.0f / distance);
+    float force = (G * mass) / (distance * distance); // Fuerza de atracción
+    acceleration = Vector2Scale(normalizeDir, force);
+}
+
+```
+https://github.com/user-attachments/assets/3ca7cc38-3728-48b0-8346-eb846bdf1e35
+
 
 
